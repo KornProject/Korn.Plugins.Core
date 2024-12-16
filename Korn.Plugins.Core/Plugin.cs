@@ -1,5 +1,10 @@
-﻿namespace Korn.Plugins.Core;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Korn.Plugins.Core;
 public abstract class Plugin
 {
-    public virtual void OnInit() { }
+    [AllowNull] public string PluginDirectory;
+
+    public virtual void OnLoad() { }
+    public virtual void OnUnload() { }
 }
