@@ -1,9 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
 
-namespace Korn.Plugins.Core;
-public static class CoreEnv
+namespace Korn.Plugins.Core
 {
-    [AllowNull] public static string KornPath;
-
-    public static readonly List<Plugin> PluginInstances = [];
-}   
+    public static class CoreEnv
+    {
+        public static readonly List<Plugin> PluginInstances = new List<Plugin>();
+    }
+}

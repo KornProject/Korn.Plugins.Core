@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Korn.Logger", "..\Korn.Logg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Korn.Plugins.ExternalInterface", "..\Korn.Plugins.ExternalInterface\Korn.Plugins.ExternalInterface\Korn.Plugins.ExternalInterface.csproj", "{D21CE6CE-A146-4302-88DE-FF184325708D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Korn.Shared", "..\Korn.Shared\Korn.Shared\Korn.Shared.csproj", "{592CC9DF-0766-467E-A86E-6F7257FA1DED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Korn.Shared.Internal", "..\Korn.Shared\Korn.Shared.Internal\Korn.Shared.Internal.csproj", "{C2C92438-2140-446B-A210-CF5A22D3D190}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +57,22 @@ Global
 		{D21CE6CE-A146-4302-88DE-FF184325708D}.Release|Any CPU.Build.0 = Release|x64
 		{D21CE6CE-A146-4302-88DE-FF184325708D}.Release|x64.ActiveCfg = Release|x64
 		{D21CE6CE-A146-4302-88DE-FF184325708D}.Release|x64.Build.0 = Release|x64
+		{592CC9DF-0766-467E-A86E-6F7257FA1DED}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{592CC9DF-0766-467E-A86E-6F7257FA1DED}.Debug|Any CPU.Build.0 = Debug|x64
+		{592CC9DF-0766-467E-A86E-6F7257FA1DED}.Debug|x64.ActiveCfg = Debug|x64
+		{592CC9DF-0766-467E-A86E-6F7257FA1DED}.Debug|x64.Build.0 = Debug|x64
+		{592CC9DF-0766-467E-A86E-6F7257FA1DED}.Release|Any CPU.ActiveCfg = Release|x64
+		{592CC9DF-0766-467E-A86E-6F7257FA1DED}.Release|Any CPU.Build.0 = Release|x64
+		{592CC9DF-0766-467E-A86E-6F7257FA1DED}.Release|x64.ActiveCfg = Release|x64
+		{592CC9DF-0766-467E-A86E-6F7257FA1DED}.Release|x64.Build.0 = Release|x64
+		{C2C92438-2140-446B-A210-CF5A22D3D190}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{C2C92438-2140-446B-A210-CF5A22D3D190}.Debug|Any CPU.Build.0 = Debug|x64
+		{C2C92438-2140-446B-A210-CF5A22D3D190}.Debug|x64.ActiveCfg = Debug|x64
+		{C2C92438-2140-446B-A210-CF5A22D3D190}.Debug|x64.Build.0 = Debug|x64
+		{C2C92438-2140-446B-A210-CF5A22D3D190}.Release|Any CPU.ActiveCfg = Release|x64
+		{C2C92438-2140-446B-A210-CF5A22D3D190}.Release|Any CPU.Build.0 = Release|x64
+		{C2C92438-2140-446B-A210-CF5A22D3D190}.Release|x64.ActiveCfg = Release|x64
+		{C2C92438-2140-446B-A210-CF5A22D3D190}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,5 +81,7 @@ Global
 		{540DEEAA-076D-4DC2-85DB-7B5980D0136F} = {85F9FA2C-3225-428E-8659-A0E6E68836AB}
 		{F95E60ED-5C30-487C-BC8F-CDEE292B886F} = {85F9FA2C-3225-428E-8659-A0E6E68836AB}
 		{D21CE6CE-A146-4302-88DE-FF184325708D} = {85F9FA2C-3225-428E-8659-A0E6E68836AB}
+		{592CC9DF-0766-467E-A86E-6F7257FA1DED} = {85F9FA2C-3225-428E-8659-A0E6E68836AB}
+		{C2C92438-2140-446B-A210-CF5A22D3D190} = {85F9FA2C-3225-428E-8659-A0E6E68836AB}
 	EndGlobalSection
 EndGlobal

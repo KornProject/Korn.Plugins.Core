@@ -1,62 +1,67 @@
-﻿namespace Korn.Plugins.Core;
-public class AssemblyWatcher : IDisposable
+﻿using System.Collections.Generic;
+using System;
+
+namespace Korn.Plugins.Core
 {
-    public AssemblyWatcher()
+    public class AssemblyWatcher : IDisposable
     {
-        AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
-    }
-
-    public delegate void AssemblyLoadedDelegate(string name);
-    public event AssemblyLoadedDelegate? AssemblyLoaded;
-
-    bool pastAssembliesLoaded;
-    public void EnsureAllAssembliesLoaded()
-    {
-        if (pastAssembliesLoaded)
-            return;
-        pastAssembliesLoaded = true;
-
-        var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-        foreach (var assembly in assemblies) 
+        public AssemblyWatcher()
         {
-            var assemblyName = assembly.GetName().Name;
+            AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
+        }
+
+        public delegate void AssemblyLoadedDelegate(string name);
+        public event AssemblyLoadedDelegate AssemblyLoaded;
+
+        bool pastAssembliesLoaded;
+        public void EnsureAllAssembliesLoaded()
+        {
+            if (pastAssembliesLoaded)
+                return;
+            pastAssembliesLoaded = true;
+
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (var assembly in assemblies)
+            {
+                var assemblyName = assembly.GetName().Name;
+                InvokeAssemblyLoaded(assemblyName);
+            }
+        }
+
+        void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
+        {
+            var assemblyName = args.LoadedAssembly.GetName().Name;
             InvokeAssemblyLoaded(assemblyName);
         }
-    }
 
-    void CurrentDomain_AssemblyLoad(object? sender, AssemblyLoadEventArgs args)
-    {
-        var assemblyName = args.LoadedAssembly.GetName().Name;
-        InvokeAssemblyLoaded(assemblyName);
-    }
-
-    object invokeLocker = new();
-    List<int> loadedAssembliesHashes = [];
-    void InvokeAssemblyLoaded(string? assemblyName)
-    {
-        if (assemblyName is null)
-            return;
-
-        var hash = assemblyName.GetHashCode();
-        lock (invokeLocker)
+        object invokeLocker = new object();
+        List<int> loadedAssembliesHashes = new List<int>();
+        void InvokeAssemblyLoaded(string assemblyName)
         {
-            if (loadedAssembliesHashes.Contains(hash))
+            if (assemblyName == null)
                 return;
 
-            loadedAssembliesHashes.Add(hash);
-            AssemblyLoaded?.Invoke(assemblyName);
+            var hash = assemblyName.GetHashCode();
+            lock (invokeLocker)
+            {
+                if (loadedAssembliesHashes.Contains(hash))
+                    return;
+
+                loadedAssembliesHashes.Add(hash);
+                AssemblyLoaded?.Invoke(assemblyName);
+            }
         }
+
+        bool disposed;
+        public void Dispose()
+        {
+            if (disposed)
+                return;
+            disposed = true;
+
+            AppDomain.CurrentDomain.AssemblyLoad -= CurrentDomain_AssemblyLoad;
+        }
+
+        ~AssemblyWatcher() => Dispose();
     }
-
-    bool disposed;
-    public void Dispose()
-    {
-        if (disposed)
-            return;
-        disposed = true;
-
-        AppDomain.CurrentDomain.AssemblyLoad -= CurrentDomain_AssemblyLoad;
-    }
-
-    ~AssemblyWatcher() => Dispose();
 }
