@@ -48,8 +48,9 @@ namespace Korn.Plugins.Core
                     return;
 
                 loadedAssembliesHashes.Add(hash);
-                AssemblyLoaded?.Invoke(assemblyName);
             }
+
+            AssemblyLoaded?.Invoke(assemblyName);
         }
 
         bool disposed;
