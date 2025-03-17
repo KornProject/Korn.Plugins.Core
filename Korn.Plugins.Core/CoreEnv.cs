@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Diagnostics;
 
 namespace Korn.Plugins.Core
 {
     public static class CoreEnv
     {
-        public static readonly List<Plugin> PluginInstances = new List<Plugin>();
+        public static KornLogger Logger;
+        public static Process CurrentProcess;
+        public static PluginLoader PluginLoader;
     }
 }

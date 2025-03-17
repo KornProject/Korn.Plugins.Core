@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Reflection;
 
 namespace Korn.Plugins.Core
 {
@@ -10,8 +11,8 @@ namespace Korn.Plugins.Core
             AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
         }
 
-        public delegate void AssemblyLoadedDelegate(string name);
-        public event AssemblyLoadedDelegate AssemblyLoaded;
+        public delegate void AssemblyLoadDelegate(Assembly assembly);
+        public event AssemblyLoadDelegate AssemblyLoad;
 
         bool pastAssembliesLoaded;
         public void EnsureAllAssembliesLoaded()
@@ -22,26 +23,20 @@ namespace Korn.Plugins.Core
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (var assembly in assemblies)
-            {
-                var assemblyName = assembly.GetName().Name;
-                InvokeAssemblyLoaded(assemblyName);
-            }
+                InvokeAssemblyLoaded(assembly);
         }
 
         void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
-        {
-            var assemblyName = args.LoadedAssembly.GetName().Name;
-            InvokeAssemblyLoaded(assemblyName);
-        }
+            => InvokeAssemblyLoaded(args.LoadedAssembly);
 
         object invokeLocker = new object();
         List<int> loadedAssembliesHashes = new List<int>();
-        void InvokeAssemblyLoaded(string assemblyName)
+        void InvokeAssemblyLoaded(Assembly assembly)
         {
-            if (assemblyName == null)
+            if (assembly == null)
                 return;
 
-            var hash = assemblyName.GetHashCode();
+            var hash = assembly.GetName().Name.GetHashCode();
             lock (invokeLocker)
             {
                 if (loadedAssembliesHashes.Contains(hash))
@@ -50,7 +45,7 @@ namespace Korn.Plugins.Core
                 loadedAssembliesHashes.Add(hash);
             }
 
-            AssemblyLoaded?.Invoke(assemblyName);
+            AssemblyLoad?.Invoke(assembly);
         }
 
         bool disposed;
