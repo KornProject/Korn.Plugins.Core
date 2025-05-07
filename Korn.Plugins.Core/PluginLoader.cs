@@ -1,4 +1,4 @@
-﻿using Korn.Interface.ServiceModule;
+﻿using Korn.Interface;
 using Korn.Shared;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace Korn.Plugins.Core
         {
             var process = Process.GetCurrentProcess();
 
-            var pluginDirectory = Korn.Interface.ServiceModule.Plugins.GetDirectoryInfo(pluginName);
+            var pluginDirectory = Korn.Interface.Plugins.GetDirectoryInfo(pluginName);
             if (!pluginDirectory.IsDirectoryExists)
                 throw new KornException($"Korn.Bootstrapper.EntryPoint.Main->InitPlugins: Plugin \"{pluginName}\" directory doesn't exist.");
 

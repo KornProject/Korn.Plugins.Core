@@ -39,10 +39,7 @@ namespace Korn.Plugins.Core.Interfaces
 
             logger.WriteMessage($"[{name}] Creating a hook for {forMethod.Method.Name}…");
             var hook = MethodHook.Create(forMethod);
-            //KornShared.Logger.Message(hook.ToString());
-            logger.WriteMessage($"[{name}] Created hook for {forMethod.Method.Name}");
             hook.AddEntry(hookEntry);
-            logger.WriteMessage($"[{name}] Added hook entry {hookEntry.Method.Name} for {forMethod.Method.Name}");
 
             self.Hooks.Add(hook);
             return self;
@@ -53,10 +50,9 @@ namespace Korn.Plugins.Core.Interfaces
             var logger = CoreEnv.Logger;
             var name = self.GetType().Name;
 
-            logger.WriteMessage($"[{name}] Hooks enabling…");
+            logger.WriteMessage($"[{name}] Enabling hooks");
             foreach (var hook in self.Hooks)
                 hook.Enable();
-            logger.WriteMessage($"[{name}] Hooks enabled");
 
             return self;
         }
@@ -66,10 +62,9 @@ namespace Korn.Plugins.Core.Interfaces
             var logger = CoreEnv.Logger;
             var name = self.GetType().Name;
 
-            logger.WriteMessage($"[{name}] Hooks disabling…");
+            logger.WriteMessage($"[{name}] Disabling hooks");
             foreach (var hook in self.Hooks)
                 hook.Disable();
-            logger.WriteMessage($"[{name}] Hooks disabled");
 
             return self;
         }

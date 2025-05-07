@@ -1,4 +1,4 @@
-﻿using Korn.Interface.ServiceModule;
+﻿using Korn.Interface;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
