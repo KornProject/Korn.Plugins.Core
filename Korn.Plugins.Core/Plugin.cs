@@ -18,7 +18,6 @@ namespace Korn.Plugins.Core
         public KornLogger Logger { get; private set; }
 
         protected virtual void OnLoad() { }
-        protected virtual void OnUnload() { }
         protected virtual void OnAssemblyLoaded(Assembly assembly) { }
 
         Dictionary<string, List<Action<Assembly>>> registeredAssemblies = new Dictionary<string, List<Action<Assembly>>>();
@@ -46,7 +45,6 @@ namespace Korn.Plugins.Core
             public KornLogger Logger { get => plugin.Logger; set => plugin.Logger = value; }
 
             public void OnLoad() => plugin.OnLoad();
-            public void OnUnload() => plugin.OnUnload();
             public void OnAssemblyLoaded(Assembly assembly)
             {
                 plugin.OnAssemblyLoaded(assembly);

@@ -1,43 +1,18 @@
-﻿using Korn.Hooking;
-using Korn.Shared;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Korn.Hooking;
 
 namespace Korn.Plugins.Core.Interfaces
 {
-    public interface IHookImplemention : IDisposable
+    public interface IHookImplemention
     {
         List<MethodHook> Hooks { get; }
     }
 
     public static class IHookImplementionExtensions
     {
-        public static IHookImplemention DisposeHooks(this IHookImplemention self)
-        {
-            foreach (var hook in self.Hooks)
-                hook.RemoveAllEntries();
-
-            return self;
-        } 
-
-        public static IHookImplemention AddHook(this IHookImplemention self, MethodInfoSummary forMethod, string methodName)
-        {
-            var method = self.GetType().GetMethodEx(methodName);
-            if (method == null)
-                throw new KornError(
-                    $"Korn.Plugins.Core.Interfaces.IHookImplementionExtensions->AddHook(this IHookImplemention, MethodInfoSummary, string): ",
-                    $"unable find method with name {methodName}."
-                );
-
-            return AddHook(self, forMethod, method);
-        }
-
         public static IHookImplemention AddHook(this IHookImplemention self, MethodInfoSummary forMethod, MethodInfoSummary hookEntry)
         {
-            var logger = CoreEnv.Logger;
-            var name = self.GetType().Name;
-
-            logger.WriteMessage($"[{name}] Creating a hook for {forMethod.Method.Name}…");
+            CoreEnv.Logger.WriteMessage($"Creating hook for {self.GetType().Name}.{forMethod.Method.Name}…");
             var hook = MethodHook.Create(forMethod);
             hook.AddEntry(hookEntry);
 
@@ -47,10 +22,7 @@ namespace Korn.Plugins.Core.Interfaces
 
         public static IHookImplemention EnableHooks(this IHookImplemention self)
         {
-            var logger = CoreEnv.Logger;
-            var name = self.GetType().Name;
-
-            logger.WriteMessage($"[{name}] Enabling hooks");
+            CoreEnv.Logger.WriteMessage($"Enabling hooks for {self.GetType().Name}");
             foreach (var hook in self.Hooks)
                 hook.Enable();
 
@@ -59,10 +31,7 @@ namespace Korn.Plugins.Core.Interfaces
 
         public static IHookImplemention DisableHooks(this IHookImplemention self)
         {
-            var logger = CoreEnv.Logger;
-            var name = self.GetType().Name;
-
-            logger.WriteMessage($"[{name}] Disabling hooks");
+            CoreEnv.Logger.WriteMessage($"Disabling hooks for {self.GetType().Name}");
             foreach (var hook in self.Hooks)
                 hook.Disable();
 
