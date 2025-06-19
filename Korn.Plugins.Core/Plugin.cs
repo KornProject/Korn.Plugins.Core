@@ -1,4 +1,5 @@
 ﻿using Korn.Interface;
+using Korn.Logger;
 using System;
 using System.Collections.Generic;
 using System.Reflection;

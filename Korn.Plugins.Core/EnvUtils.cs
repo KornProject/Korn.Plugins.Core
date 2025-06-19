@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Korn.Modules.WinApi;
+using System;
 
 namespace Korn.Plugins.Core
 {
     public static class EnvUtils
     {
-        public static bool HasModule(string name) => Interop.GetModuleHandle(name) != IntPtr.Zero;
+        public static bool HasModule(string name) => Kernel32.GetModuleHandle(name) != IntPtr.Zero;
     }
 }

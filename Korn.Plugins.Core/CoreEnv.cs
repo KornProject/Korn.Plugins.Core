@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using Korn.Logger;
 
 namespace Korn.Plugins.Core
 {
